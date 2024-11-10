@@ -1,0 +1,5 @@
+[tool.pylance]
+python.analysis.extraPaths = ["./"]
+
+[tool.pytest]
+pythonpath = "."

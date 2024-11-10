@@ -1,0 +1,110 @@
+<!-- templates/base.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Employee Management System{% endblock %}</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
+</head>
+<body class="min-h-screen bg-gray-100">
+    <div id="particles-js" class="fixed inset-0 z-0"></div>
+    
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg relative z-10">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between h-16">
+                <div class="flex">
+                    <div class="flex-shrink-0 flex items-center">
+                        <a href="/" class="text-xl font-bold text-blue-600">EMS</a>
+                    </div>
+                    {% if current_user.is_authenticated %}
+                    <div class="hidden md:ml-6 md:flex md:space-x-8">
+                        <a href="{{ url_for('main.dashboard') }}" 
+                           class="nav-link {% if request.endpoint == 'main.dashboard' %}active{% endif %}">
+                            Dashboard
+                        </a>
+                        <a href="{{ url_for('employee.list') }}"
+                           class="nav-link {% if request.endpoint.startswith('employee.') %}active{% endif %}">
+                            Employees
+                        </a>
+                        <a href="{{ url_for('ticket.list') }}"
+                           class="nav-link {% if request.endpoint.startswith('ticket.') %}active{% endif %}">
+                            Tickets
+                        </a>
+                        {% if current_user.is_admin %}
+                        <a href="{{ url_for('admin.dashboard') }}"
+                           class="nav-link {% if request.endpoint.startswith('admin.') %}active{% endif %}">
+                            Admin
+                        </a>
+                        {% endif %}
+                    </div>
+                    {% endif %}
+                </div>
+                
+                <div class="flex items-center">
+                    {% if current_user.is_authenticated %}
+                    <div class="ml-3 relative">
+                        <div class="flex items-center">
+                            <img class="h-8 w-8 rounded-full object-cover"
+                                 src="{{ current_user.profile_picture_url or url_for('static', filename='images/default-avatar.png') }}"
+                                 alt="Profile">
+                            <div class="ml-3">
+                                <button id="user-menu-button" class="flex items-center">
+                                    <span class="mr-2">{{ current_user.first_name }}</span>
+                                    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        <!-- Dropdown menu -->
+                        <div id="user-menu" class="hidden absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+                            <div class="py-1">
+                                <a href="{{ url_for('auth.profile') }}" class="dropdown-item">Profile</a>
+                                <a href="{{ url_for('auth.settings') }}" class="dropdown-item">Settings</a>
+                                <div class="border-t border-gray-100"></div>
+                                <a href="{{ url_for('auth.logout') }}" class="dropdown-item text-red-600">Logout</a>
+                            </div>
+                        </div>
+                    </div>
+                    {% else %}
+                    <a href="{{ url_for('auth.login') }}" class="btn-primary">Login</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="fixed top-4 right-4 z-50">
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }} animate-fade-in-down">
+                        {{ message }}
+                        <button class="close-alert">&times;</button>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <!-- Main Content -->
+    <main class="relative z-10 container mx-auto px-4 py-8">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="relative z-10 bg-white shadow-lg mt-auto">
+        <div class="container mx-auto px-4 py-6">
+            <p class="text-center text-gray-600">© 2024 Employee Management System. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

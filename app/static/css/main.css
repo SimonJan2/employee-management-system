@@ -1,0 +1,159 @@
+/* static/css/main.css */
+
+/* Base Styles */
+:root {
+    --primary-color: #3B82F6;
+    --primary-hover: #2563EB;
+    --secondary-color: #6B7280;
+    --success-color: #10B981;
+    --danger-color: #EF4444;
+    --warning-color: #F59E0B;
+    --info-color: #3B82F6;
+}
+
+/* Navigation */
+.nav-link {
+    @apply inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 hover:text-gray-900 hover:border-gray-300;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+}
+
+.nav-link.active {
+    @apply border-blue-500 text-gray-900;
+    border-bottom: 2px solid var(--primary-color);
+}
+
+/* Buttons */
+.btn-primary {
+    @apply inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500;
+}
+
+.btn-secondary {
+    @apply inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500;
+}
+
+.btn-danger {
+    @apply inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500;
+}
+
+/* Cards */
+.card {
+    @apply bg-white rounded-lg shadow-md overflow-hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+    @apply shadow-lg;
+    transform: translateY(-2px);
+}
+
+/* Form Elements */
+.form-input {
+    @apply mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm;
+}
+
+.form-label {
+    @apply block text-sm font-medium text-gray-700;
+}
+
+/* Alerts */
+.alert {
+    @apply p-4 rounded-md mb-4 flex items-center justify-between;
+    animation: slideIn 0.3s ease-out;
+}
+
+.alert-success {
+    @apply bg-green-100 text-green-800;
+}
+
+.alert-error {
+    @apply bg-red-100 text-red-800;
+}
+
+.alert-info {
+    @apply bg-blue-100 text-blue-800;
+}
+
+.alert-warning {
+    @apply bg-yellow-100 text-yellow-800;
+}
+
+/* Dropdown */
+.dropdown-item {
+    @apply block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100;
+}
+
+/* Animations */
+@keyframes slideIn {
+    from {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Particles Background */
+#particles-js {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-color: #f3f4f6;
+}
+
+/* Tables */
+.table-container {
+    @apply overflow-x-auto shadow rounded-lg;
+}
+
+.table {
+    @apply min-w-full divide-y divide-gray-200;
+}
+
+.table th {
+    @apply px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider;
+}
+
+.table td {
+    @apply px-6 py-4 whitespace-nowrap text-sm text-gray-900;
+}
+
+.table tr {
+    @apply hover:bg-gray-50;
+}
+
+/* Loading States */
+.loading {
+    @apply animate-pulse bg-gray-200;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .hide-mobile {
+        display: none;
+    }
+    
+    .card-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
